@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!--FB-->
+<html>
+  <head>
+    <title>my web Page</title>
+  </head>
+
+  <style type="text/css">
+    .button {
+      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+      background-color: #008CBA;
+    }
+  </style>
+
+    <body>
+
+      <button class="button" type="button" onClick="clicked()">Click me</button>
+      <p>Clicks: <a id="clicks">0</a></p>
+      <br>
+      <hr>
+
+      <p>now try implementing this</p>
+      <p>likes: <a id="liked">0</a></p>
+      <button class="button" type="button" onClick="liked()">upVote</button>
+      <button class="button" type="button" onClick="disliked()">downVote</button>
+      
+
+      <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
+    	
+      <script>
+        // Initialize Firebase
+        var config = {
+          apiKey: "AIzaSyAhpp0M3kF8QnCGJaKZujUocZ69VuwpHjU",
+          authDomain: "mypage1-d9568.firebaseapp.com",
+          databaseURL: "https://mypage1-d9568.firebaseio.com",
+          projectId: "mypage1-d9568",
+          storageBucket: "mypage1-d9568.appspot.com",
+          messagingSenderId: "646290067011"
+        };
+        firebase.initializeApp(config);
+
+
+        // get a reference to the score from the html/dom
+        var score = document.getElementById("clicks");
+        // get a reference to the database where scores will be held
+        var scoreRef = firebase.database().ref().child('score');
+        //when the value of score changes in the database update what the user sees in score.
+        scoreRef.on('value',snap => score.innerHTML = snap.val()); //  you get a snapshot of the change in the database 
+        var clicks;
+
+        //this function is called when the btn is clicked
+        function clicked() {
+            clicks = parseInt(score.innerHTML) +1;
+            scoreRef.set(clicks);    
+        }; 
+
+
+        function liked(){
+          //liked val +1
+        }
+        function disliked(){
+          //liked val-1
+        }
+
+      </script>
+
+    </body>
+
+</html>
